@@ -12,8 +12,7 @@ const CONFIG = {
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '分享创业',
   HEO_HERO_TITLE_2: '与个人成长',
-  HEO_HERO_TITLE_3: '
-  HERO_TITLE_3: 'WWW.BANPIE.INFO',
+  HEO_HERO_TITLE_3: 'WWW.BANPIE.INFO',
   HEO_HERO_TITLE_4: '新版上线',
   HEO_HERO_TITLE_5: '做是最好的学',
   HEO_HERO_TITLE_LINK: 'https://www.banpie.info',

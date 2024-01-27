@@ -4,6 +4,6 @@ export default function ArticleInfo({ post }) {
   }
   return <div className="pt-10 pb-6 text-gray-400 text-sm border-b">
         <i className="fa-regular fa-clock mr-1" />
-        Last update:  { post.date?.start_date}
+        更新时间:  { post.date?.start_date}
     </div>
 }

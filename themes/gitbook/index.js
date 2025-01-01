@@ -15,6 +15,7 @@ import { isBrowser } from '@/lib/utils'
 import { getShortId } from '@/lib/utils/pageId'
 import { SignIn, SignUp } from '@clerk/nextjs'
 import dynamic from 'next/dynamic'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
@@ -77,7 +78,7 @@ function getNavPagesWithLatest(allNavPages, latestPosts, post) {
     }
     // 属于最新文章通常6篇 && (无阅读记录 || 最近更新时间大于上次阅读时间)
     if (
-      latestPosts.some(post => post?.id.indexOf(item?.short_id) === 0) &&
+      latestPosts.some(post => post?.id.indexOf(item?.short_id) === 14) &&
       (!postReadTime[item.short_id] ||
         postReadTime[item.short_id] < new Date(item.lastEditedDate).getTime())
     ) {
@@ -305,8 +306,17 @@ const LayoutPostList = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, prev, next, lock, validPassword } = props
+  const { post, prev, next, siteInfo, lock, validPassword } = props
   const router = useRouter()
+  // 如果是文档首页文章，则修改浏览器标签
+  const index = siteConfig('GITBOOK_INDEX_PAGE', 'about', CONFIG)
+  const basePath = router.asPath.split('?')[0]
+  const title =
+    basePath?.indexOf(index) > 0
+      ? `${post?.title} | ${siteInfo?.description}`
+      : `${post?.title} | ${siteInfo?.title}`
+
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
@@ -323,12 +333,16 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])
   return (
     <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+
       {/* 文章锁 */}
       {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -574,17 +588,18 @@ const LayoutDashboard = props => {
 }
 
 export {
-  Layout404,
-  LayoutArchive,
-  LayoutBase,
-  LayoutCategoryIndex,
-  LayoutDashboard,
-  LayoutIndex,
-  LayoutPostList,
-  LayoutSearch,
-  LayoutSignIn,
-  LayoutSignUp,
-  LayoutSlug,
-  LayoutTagIndex,
-  CONFIG as THEME_CONFIG
+    Layout404,
+    LayoutArchive,
+    LayoutBase,
+    LayoutCategoryIndex,
+    LayoutDashboard,
+    LayoutIndex,
+    LayoutPostList,
+    LayoutSearch,
+    LayoutSignIn,
+    LayoutSignUp,
+    LayoutSlug,
+    LayoutTagIndex,
+    CONFIG as THEME_CONFIG
 }
+

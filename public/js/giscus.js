@@ -109,7 +109,6 @@
       return (a = a[1]) && giscusIframe.setAttribute(g, a)
     })
     giscusIframe.style.opacity = '0'
-    giscusIframe.style.paddingRight = '1px'
     giscusIframe.addEventListener('load', function () {
       giscusIframe.style.removeProperty('opacity')
       giscusIframe.classList.remove('giscus-frame--loading')
